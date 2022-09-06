@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.astar.realty.mapper.BrokerMapper">
+    <resultMap id="LoginSessionMap" type="com.astar.realty.data.LoginSessionVO">
+        <id property="id" column="bork_id"/>
+        <result property="name" column="bork_pwd"/>
+        <result property="pf_img" column="bork_image_file"/>
+    </resultMap>
+
+    <insert id="insertBrokerInfo">
+        INSERT INTO broker_info
+        (bork_id, bork_pwd, bork_name, bork_phone, bork_status, bork_image_file)
+        VALUES
+        (#{bork_id}, #{bork_pwd}, #{bork_name}, #{bork_phone}, #{bork_status}, #{bork_image_file})
+    </insert>
+    <select id="isExistBrokerId" resultType="java.lang.Boolean">
+        SELECT COUNT(*)=1
+        FROM broker_info
+        WHERE bork_id=#{id}
+    </select>
+    <select id="loginBroker" resultType="java.lang.Boolean">
+        SELECT COUNT(*)=1
+        FROM broker_info
+        WHERE bork_id = #{id}
+            AND bork_pwd = #{pwd}
+    </select>  
+    <select id="getLoginBrokerInfo" resultMap="LoginSessionMap">
+        SELECT bork_id, bork_pwd, bork_image_file
+        FROM broker_info
+        WHERE bork_id = #{id}
+            AND bork_pwd = #{pwd}
+    </select>
+    <update id="updateBrokerInfo">
+        UPDATE broker_info
+        SET 
+            bork_boi_seq=#{bork_boi_seq},
+            bork_pwd=#{bork_pwd},
+            bork_name=#{bork_name},
+            bork_phone=#{bork_phone},
+            bork_image_file=#{bork_image_file}
+        WHERE bork_id = #{bork_id}
+    </update>
+</mapper>

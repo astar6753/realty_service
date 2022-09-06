@@ -1,1 +1,0 @@
-# realty_service
