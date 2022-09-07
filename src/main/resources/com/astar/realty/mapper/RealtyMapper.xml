@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.astar.realty.mapper.RealtyMapper">
+    <insert id="insertBuildingInfo">
+        INSERT INTO building_info
+        (
+            bi_name, bi_total_floor, bi_total_parking, bi_elevator, bi_use_type, 
+            bi_use_accepted_dt, bi_address, bi_longitude, bi_latitude
+        )
+        VALUES
+        (
+            #{bi_name}, #{bi_total_floor}, #{bi_total_parking}, #{bi_elevator}, #{bi_use_type}, 
+            #{bi_use_accepted_dt}, #{bi_address}, #{bi_longitude}, #{bi_latitude}
+        )
+    </insert>
+    <select id="isExistBuilding" resultType="java.lang.Boolean">
+        SELECT COUNT(*) = 1
+        FROM building_info
+        WHERE replace(bi_address,' ','') = #{address}
+    </select>
+    <select id="selectBuildingTotalPages" resultType="java.lang.Integer">
+        SELECT CEIL(COUNT(*)/10)
+        FROM building_info
+        WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
+    </select>
+    <select id="selectBuildingTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM building_info
+        WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
+    </select>
+    <select id="selectBuildingList" resultType="com.astar.realty.data.BuildingInfoVO">
+        SELECT *
+        FROM building_info
+        WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
+        LIMIT 10 offset #{offset}
+    </select>
+
+    <insert id="insertRealtyOptionInfo" useGeneratedKeys="true"
+        parameterType="com.astar.realty.data.RealtyOptionInfoVO"
+        keyProperty="ro_seq"
+    >
+        INSERT INTO realty_option
+        (
+            ro_induction, ro_elec_range, ro_ariconditioner, ro_washing_machine, ro_television, 
+            ro_closet, ro_bed, ro_desk, ro_shoe_closet, ro_bidet, 
+            ro_stove, ro_refrigerator, ro_elec_doorlock
+        )
+        VALUES        
+        (
+            #{ro_induction}, #{ro_elec_range}, #{ro_ariconditioner}, #{ro_washing_machine}, #{ro_television}, 
+            #{ro_closet}, #{ro_bed}, #{ro_desk}, #{ro_shoe_closet}, #{ro_bidet}, 
+            #{ro_stove}, #{ro_refrigerator}, #{ro_elec_doorlock}
+        )
+    </insert>
+    <insert id="insertRealtyBasicInfo" useGeneratedKeys="true"
+        parameterType="com.astar.realty.data.RealtyBasicInfoVO"
+        keyProperty="rbi_seq"
+    >
+        INSERT INTO realty_basic_info
+        (
+            rbi_price, rbi_monthly_price, rbi_maintain_price, rbi_sale_type, rbi_parking_count, 
+            rbi_short_term_lease, rbi_room_type, rbi_floor, rbi_supply_area, rbi_use_area, 
+            rbi_room_count, rbi_buliding_number, rbi_room_number, rbi_room_direction, rbi_heating_type, 
+            rbi_kitchen_type, rbi_balcony_type, rbi_available_dt, rbi_reg_dt, rbi_status, 
+            rbi_kitchen_structure, rbi_maintain_list, rbi_bi_seq, rbi_ro_seq
+        )
+        VALUES
+        (
+            #{rbi_price}, #{rbi_monthly_price}, #{rbi_maintain_price}, #{rbi_sale_type}, #{rbi_parking_count}, 
+            #{rbi_short_term_lease}, #{rbi_room_type}, #{rbi_floor}, #{rbi_supply_area}, #{rbi_use_area}, 
+            #{rbi_room_count}, #{rbi_buliding_number}, #{rbi_room_number}, #{rbi_room_direction}, #{rbi_heating_type}, 
+            #{rbi_kitchen_type}, #{rbi_balcony_type}, #{rbi_available_dt}, #{rbi_reg_dt}, #{rbi_status}, 
+            #{rbi_kitchen_structure}, #{rbi_maintain_list}, #{rbi_bi_seq}, #{rbi_ro_seq}
+        )
+    </insert>
+    <insert id="insertRealtyPostInfo">
+        INSERT INTO realty_post_info
+        (rpi_title, rpi_content, rpi_bork_seq, rpi_rbi_seq)
+        VALUES
+        (#{rpi_title}, #{rpi_content}, #{rpi_bork_seq}, #{rpi_rbi_seq})
+    </insert>
+</mapper>

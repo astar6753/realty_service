@@ -22,8 +22,13 @@ public enum ErrorCode {
     INVALID_PWD(400, "BAD_REQUEST", "B003 Broker account Pwd is invalid"),
     LOGIN_INPUT_INVALID(401, "UNAUTHORIZED", "B004 Broker login input values are invalid"),
     AES_ALGORITHM_ERROR(500,"INTERNAL_SERVER_ERROR", "B005 AES algorithm not passed"),
+    INVALID_STATUS(400,"BAD_REQUEST", "B006 Parameter(status) leaving account is invalid [1,2,3,4]"),
+    INVALID_VALUE(400,"BAD_REQUEST", "B007 Parameter(value) leaving account is invalid"),
+    // Realty
+    REALTY_ADDRESS_DUPICATION(202,"Accepted", "R001 realty address is duplicated"),
+    
     ;
-
+    
 
     private int status;
     private final String code;

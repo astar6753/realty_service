@@ -13,5 +13,8 @@ public interface BrokerMapper {
     public Boolean loginBroker(BrokerLoginVO login);
     public LoginSessionVO getLoginBrokerInfo(BrokerLoginVO login);
     public void updateBrokerInfo(BrokerInfoVO data);
+
+    public Integer selectBrokerStatus(Integer user_no);
+    public void updateBrokerStatus(Integer user_no, Integer status);
     
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.astar.realty.mapper.RealtyMapper">
+    <insert id="insertBuilding">
+        INSERT INTO building_info
+        (
+            bi_name, bi_total_floor, bi_total_parking, bi_elevator, bi_use_type, 
+            bi_use_accepted_dt, bi_address, bi_longitude, bi_latitude
+        )
+        VALUES
+        (
+            #{bi_name}, #{bi_total_floor}, #{bi_total_parking}, #{bi_elevator}, #{bi_use_type}, 
+            #{bi_use_accepted_dt}, #{bi_address}, #{bi_longitude}, #{bi_latitude}
+        )
+    </insert>
+    <select id="isExistBuilding" resultType="java.lang.Boolean">
+        SELECT COUNT(*) = 1
+        FROM building_info
+        WHERE replace(bi_address,' ','') = #{address}
+    </select>
+    <select id="selectBuildingTotalPages" resultType="java.lang.Integer">
+        SELECT CEIL(COUNT(*)/10)
+        FROM building_info
+        WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
+    </select>
+    <select id="selectBuildingTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM building_info
+        WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
+    </select>
+    <select id="selectBuildingList" resultType="com.astar.realty.data.BuildingInfoVO">
+        SELECT *
+        FROM building_info
+        WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
+        LIMIT 10 offset #{offset}
+    </select>
+</mapper>

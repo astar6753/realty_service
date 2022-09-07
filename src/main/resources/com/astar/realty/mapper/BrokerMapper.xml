@@ -17,7 +17,7 @@
     <select id="isExistBrokerId" resultType="java.lang.Boolean">
         SELECT COUNT(*)=1
         FROM broker_info
-        WHERE bork_id=#{id}
+        WHERE bork_id = #{id}
     </select>
     <select id="loginBroker" resultType="java.lang.Boolean">
         SELECT COUNT(*)=1
@@ -34,11 +34,23 @@
     <update id="updateBrokerInfo">
         UPDATE broker_info
         SET 
-            bork_boi_seq=#{bork_boi_seq},
-            bork_pwd=#{bork_pwd},
-            bork_name=#{bork_name},
-            bork_phone=#{bork_phone},
-            bork_image_file=#{bork_image_file}
+            bork_boi_seq = #{bork_boi_seq},
+            bork_pwd = #{bork_pwd},
+            bork_name = #{bork_name},
+            bork_phone = #{bork_phone},
+            bork_image_file = #{bork_image_file}
         WHERE bork_id = #{bork_id}
     </update>
+
+    <select id="selectBrokerStatus" resultType="java.lang.Integer">
+        SELECT bork_status
+        FROM broker_info
+        WHERE bork_seq = #{user_no}
+    </select>
+    <update id="updateBrokerStatus">
+        UPDATE broker_info
+        SET bork_status = #{status}
+        WHERE bork_seq = #{user_no}
+    </update>
+
 </mapper>

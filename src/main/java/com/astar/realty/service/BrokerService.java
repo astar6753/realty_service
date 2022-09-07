@@ -91,4 +91,39 @@ public class BrokerService {
             mapper.updateBrokerInfo(request);
         }
     }
+
+    public String updateBrokerStatus(String value, Integer status, Integer user_no, HttpSession session) {
+        String[] arr_msg= {
+            "탈퇴 철회가 완료되었습니다.",
+            "중개인 정지 처리가 완료되었습니다.",
+            "탈퇴 신청이 완료되었습니다.",
+            "중개인 즉시 탈퇴 처리가 완료되었습니다.",
+        };
+        Integer current = mapper.selectBrokerStatus(user_no);
+        String msg;
+        if(current==status) {
+            throw new CustomExceptions(ErrorCode.INVALID_STATUS,"현재 status와 입력한 status가 동일합니다. (current:"+current+"incoming:"+status+")");
+        }
+        if(value.equals("broker")) {
+            if(status==1||status==3){
+                msg = arr_msg[status-1];
+            }
+            else{
+                throw new CustomExceptions(ErrorCode.INVALID_STATUS,"중개인 계정은 탈퇴 및 탈퇴 철회만 가능합니다.");    
+            }
+        }
+        else if(value.equals("admin")){
+            if(status<=4 && status>0){
+                msg = arr_msg[status-1];
+            }
+            else{
+                throw new CustomExceptions(ErrorCode.INVALID_STATUS,"잘못된 요청입니다. (usage: status:[1,2,3,4])");
+            }
+        }
+        else{
+            throw new CustomExceptions(ErrorCode.INVALID_VALUE,"잘못된 요청입니다. (usage: /api/broker/[broker,admin])");
+        }
+        mapper.updateBrokerStatus(user_no, status);
+        return msg;
+    }
 }
