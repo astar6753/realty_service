@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.astar.realty.mapper.BrokerMapper">
+    <resultMap id="BrokerCreateRequestMap" type="com.astar.realty.data.request.BrokerDTO">
+        <id property="id" column="bork_id"/>
+        <result property="pwd" column="bork_pwd"/>
+        <result property="name" column="bork_image_file"/>
+        <result property="phone" column="bork_image_file"/>
+        <result property="imageFileName" column="bork_image_file"/>
+    </resultMap>
     <resultMap id="LoginSessionMap" type="com.astar.realty.data.LoginSessionVO">
         <id property="id" column="bork_id"/>
         <result property="name" column="bork_pwd"/>
@@ -10,9 +17,9 @@
 
     <insert id="insertBrokerInfo">
         INSERT INTO broker_info
-        (bork_id, bork_pwd, bork_name, bork_phone, bork_status, bork_image_file)
+        (bork_id, bork_pwd, bork_name, bork_phone, bork_image_file)
         VALUES
-        (#{bork_id}, #{bork_pwd}, #{bork_name}, #{bork_phone}, #{bork_status}, #{bork_image_file})
+        (#{bork_id}, #{bork_pwd}, #{bork_name}, #{bork_phone}, #{bork_image_file})
     </insert>
     <select id="isExistBrokerId" resultType="java.lang.Boolean">
         SELECT COUNT(*)=1
@@ -53,4 +60,64 @@
         WHERE bork_seq = #{user_no}
     </update>
 
+    <insert id= "insertBrokerOfficeInfo">
+        INSERT INTO broker_office_info
+        (
+            boi_name, boi_address, boi_phone, boi_master_name, boi_reg_number, 
+            boi_reg_dt, boi_image_file
+        )
+        VALUES
+        (
+            #{boi_name}, #{boi_address}, #{boi_phone}, #{boi_master_name}, #{boi_reg_number}, 
+            #{boi_reg_dt}, #{boi_image_file}
+        )
+    </insert>
+    <select id="isExistBrokerOffice">
+        SELECT COUNT(*) = 1
+        FROM broker_office_info
+        WHERE replace(boi_name,' ','') = #{name} 
+            OR boi_reg_number = #{reg_no}
+    </select>
+
+    <select id="selectBrokerOfficeTotalPages" resultType="java.lang.Integer">
+        SELECT CELI(COUNT(*)/10)
+        FROM broker_office_info
+        WHERE boi_name LIKE CONCAT("%",#{keyword},"%")
+    </select>
+    <select id="selectBrokerOfficeTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM broker_office_info
+        WHERE boi_name LIKE CONCAT("%",#{keyword},"%")
+    </select>
+    <select id="selectBrokerOfficeList" resultType="com.astar.realty.data.BrokerOfficeInfoVO">
+        SELECT 
+            boi_seq, boi_name, boi_address, boi_phone, boi_master_name, 
+            boi_reg_number, boi_reg_dt, boi_image_file
+        FROM broker_office_info
+        WHERE boi_name LIKE CONCAT("%",#{keyword},"%")
+        LIMIT 10 offset #{offset}
+    </select>
+
+    <update id="updateBrokerOfficeInfo">
+        UPDATE broker_office_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="boi_address!=null">boi_address=#{boi_address}</if>
+            <if test="boi_phone!=null">boi_phone=#{boi_phone}</if>
+            <if test="boi_master_name!=null">boi_master_name=#{boi_master_name}</if>
+            <if test="boi_image_file!=null">boi_image_file=#{boi_image_file}</if>
+        </trim>
+        WHERE boi_seq=#{boi_seq}
+    </update>
+    <delete id="deleteBrokerOfficeInfo">
+        DELETE 
+        FROM broker_office_info
+        WHERE boi_seq=#{no}
+    </delete>
+    <select id="selectBrokerOfficeBySeq" resultType="com.astar.realty.data.BrokerOfficeInfoVO">
+        SELECT 
+            boi_seq, boi_name, boi_address, boi_phone, boi_master_name, 
+            boi_reg_number, boi_reg_dt, boi_image_file
+        FROM broker_office_info 
+        WHERE boi_seq = #{no}
+    </select>
 </mapper>

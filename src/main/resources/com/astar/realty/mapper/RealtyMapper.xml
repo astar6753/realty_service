@@ -14,7 +14,7 @@
             #{bi_use_accepted_dt}, #{bi_address}, #{bi_longitude}, #{bi_latitude}
         )
     </insert>
-    <select id="isExistBuilding" resultType="java.lang.Boolean">
+    <select id="isExistBuildingAddress" resultType="java.lang.Boolean">
         SELECT COUNT(*) = 1
         FROM building_info
         WHERE replace(bi_address,' ','') = #{address}
@@ -35,6 +35,34 @@
         WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
         LIMIT 10 offset #{offset}
     </select>
+
+    <update id="updateBuildingInfo">
+        UPDATE building_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update_name">bi_name=#{building_info.bi_name}</if>
+            <if test="update_total_floor">bi_total_floor=#{building_info.bi_total_floor}</if>
+            <if test="update_total_parking">bi_total_parking=#{building_info.bi_total_parking}</if>
+            <if test="update_elevator">bi_elevator=#{building_info.bi_elevator}</if>
+            <if test="update_use_type">bi_use_type=#{building_info.bi_use_type}</if>
+            <if test="update_use_accepted_dt">bi_use_accepted_dt=#{building_info.bi_use_accepted_dt}</if>
+            <if test="update_address">bi_address=#{building_info.bi_address}</if>
+            <if test="update_longitude">bi_longitude=#{building_info.bi_longitude}</if>
+            <if test="update_latitude">bi_latitude=#{building_info.bi_latitude}</if>
+        </trim>
+        WHERE 
+            bi_seq=#{building_info.bi_seq}
+    </update>
+    <select id="isExistBuildingInfoBySeq" resultType="java.lang.Boolean">
+        SELECT COUNT(*) = 1 
+        FROM building_info
+        WHERE bi_seq = #{building_seq}
+    </select>
+    <delete id="deleteBuildingInfo">
+        DELETE
+        FROM building_info
+        WHERE bi_seq = #{building_seq}
+    </delete>
+
 
     <insert id="insertRealtyOptionInfo" useGeneratedKeys="true"
         parameterType="com.astar.realty.data.RealtyOptionInfoVO"
@@ -80,4 +108,90 @@
         VALUES
         (#{rpi_title}, #{rpi_content}, #{rpi_bork_seq}, #{rpi_rbi_seq})
     </insert>
+    <update id="updateRealtyBasicInfo">
+        UPDATE realty_basic_info        
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rbi_price!=null">rbi_price=#{rbi_price}</if>
+            <if test="rbi_monthly_price!=null">rbi_monthly_price=#{rbi_monthly_price}</if>
+            <if test="rbi_maintain_price!=null">rbi_maintain_price=#{rbi_maintain_price}</if>
+            <if test="rbi_sale_type!=null">rbi_sale_type=#{rbi_sale_type}</if>
+            <if test="rbi_parking_count!=null">rbi_parking_count=#{rbi_parking_count}</if>
+            <if test="rbi_short_term_lease!=null">rbi_short_term_lease=#{rbi_short_term_lease}</if>
+            <if test="rbi_room_type!=null">rbi_room_type=#{rbi_room_type}</if>
+            <if test="rbi_floor!=null">rbi_floor=#{rbi_floor}</if>
+            <if test="rbi_supply_area!=null">rbi_supply_area=#{rbi_supply_area}</if>
+            <if test="rbi_use_area!=null">rbi_use_area=#{rbi_use_area}</if>
+            <if test="rbi_room_count!=null">rbi_room_count=#{rbi_room_count}</if>
+            <if test="rbi_buliding_number!=null">rbi_buliding_number=#{rbi_buliding_number}</if>
+            <if test="rbi_room_number!=null">rbi_room_number=#{rbi_room_number}</if>
+            <if test="rbi_room_direction!=null">rbi_room_direction=#{rbi_room_direction}</if>
+            <if test="rbi_heating_type!=null">rbi_heating_type=#{rbi_heating_type}</if>
+            <if test="rbi_kitchen_type!=null">rbi_kitchen_type=#{rbi_kitchen_type}</if>
+            <if test="rbi_balcony_type!=null">rbi_balcony_type=#{rbi_balcony_type}</if>
+            <if test="rbi_available_dt!=null">rbi_available_dt=#{rbi_available_dt}</if>
+            <if test="rbi_reg_dt!=null">rbi_reg_dt=#{rbi_reg_dt}</if>
+            <if test="rbi_status!=null">rbi_status=#{rbi_status}</if>
+            <if test="rbi_kitchen_structure!=null">rbi_kitchen_structure=#{rbi_kitchen_structure}</if>
+            <if test="rbi_maintain_list!=null">rbi_maintain_list=#{rbi_maintain_list}</if>
+            <if test="rbi_bi_seq!=null">rbi_bi_seq=#{rbi_bi_seq}</if>
+            <if test="rbi_ro_seq!=null">rbi_ro_seq=#{rbi_ro_seq}</if>
+        </trim>
+        WHERE rbi_seq=#{rbi_seq}
+    </update>
+    <update id="updateRealtyOptionInfo">
+        UPDATE realty_option
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ro_induction!=null">ro_induction=#{ro_induction}</if>
+            <if test="ro_elec_range!=null">ro_elec_range=#{ro_elec_range}</if>
+            <if test="ro_ariconditioner!=null">ro_ariconditioner=#{ro_ariconditioner}</if>
+            <if test="ro_washing_machine!=null">ro_washing_machine=#{ro_washing_machine}</if>
+            <if test="ro_television!=null">ro_television=#{ro_television}</if>
+            <if test="ro_closet!=null">ro_closet=#{ro_closet}</if>
+            <if test="ro_bed!=null">ro_bed=#{ro_bed}</if>
+            <if test="ro_desk!=null">ro_desk=#{ro_desk}</if>
+            <if test="ro_shoe_closet!=null">ro_shoe_closet=#{ro_shoe_closet}</if>
+            <if test="ro_bidet!=null">ro_bidet=#{ro_bidet}</if>
+            <if test="ro_stove!=null">ro_stove=#{ro_stove}</if>
+            <if test="ro_refrigerator!=null">ro_refrigerator=#{ro_refrigerator}</if>
+            <if test="ro_elec_doorlock!=null">ro_elec_doorlock=#{ro_elec_doorlock}</if>
+        </trim>
+        WHERE ro_seq=#{ro_seq}
+    </update>
+    <update id="updateRealtyPostInfo">
+        UPDATE realty_post_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rpi_title!=null">rpi_title=#{rpi_title}</if>
+            <if test="rpi_content!=null">rpi_content=#{rpi_content}</if>
+            <if test="rpi_bork_seq!=null">rpi_bork_seq=#{rpi_bork_seq}</if>
+            <if test="rpi_rbi_seq!=null">rpi_rbi_seq=#{rpi_rbi_seq}</if>
+        </trim>
+        WHERE rpi_seq=#{rpi_seq}
+    </update>
+
+    <select id="isExistMaintainItem" resultType="java.lang.Boolean">
+        SELECT COUNT(*) = 1 
+        FROM maintain_info 
+        WHERE maintain_name = #{name}
+    </select>
+    <insert id="insertMaintainItem">
+        INSERT INTO maintain_info
+        (maintain_name) 
+        VALUES
+        (#{name})
+    </insert>
+
+    <select id="selectMaintainItemCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM maintain_info
+    </select>
+    <select id="selectMaintainItemList" resultType="com.astar.realty.data.RealtyMaintainInfoVO">
+        SELECT maintain_seq, maintain_name
+        FROM maintain_info
+    </select>
+    
+    <delete id="deleteMaintainItem">
+        DELETE FROM maintain_info 
+        WHERE maintain_name = #{name}
+    </delete>
+
 </mapper>

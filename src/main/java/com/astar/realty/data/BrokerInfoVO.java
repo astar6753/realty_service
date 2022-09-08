@@ -1,11 +1,9 @@
 package com.astar.realty.data;
 
-
-import org.springframework.validation.annotation.Validated;
-
 import lombok.Data;
 
-@Validated
+
+
 @Data
 public class BrokerInfoVO {
     private Integer bork_seq;
