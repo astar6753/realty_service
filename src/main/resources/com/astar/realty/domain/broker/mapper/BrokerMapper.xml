@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.astar.domain.broker.mapper.BrokerMapper">
-    <resultMap id="LoginResultMap" type="com.astar.domain.broker.data.BrokerLogin$Result">
+<mapper namespace="com.astar.realty.domain.broker.mapper.BrokerMapper">
+    <resultMap id="LoginResultMap" type="com.astar.realty.domain.broker.data.BrokerLogin$Result">
         <id property="id" column="bork_id"/>
         <result property="name" column="bork_name"/>
         <result property="profileImg" column="bork_image_file"/>
@@ -89,7 +89,7 @@
         FROM broker_office_info
         WHERE boi_name LIKE CONCAT("%",#{keyword},"%")
     </select>
-    <select id="selectBrokerOfficeList" resultType="com.astar.domain.broker.data.BrokerOfficeInfoVO">
+    <select id="selectBrokerOfficeList" resultType="com.astar.realty.domain.broker.data.BrokerOfficeInfoVO">
         SELECT 
             boi_seq, boi_name, boi_address, boi_phone, boi_master_name, 
             boi_reg_number, boi_reg_dt, boi_image_file
@@ -114,7 +114,7 @@
         FROM broker_office_info
         WHERE boi_seq=#{office_no}
     </delete>
-    <select id="selectBrokerOfficeBySeq" resultType="com.astar.domain.broker.data.BrokerOfficeInfoVO">
+    <select id="selectBrokerOfficeBySeq" resultType="com.astar.realty.domain.broker.data.BrokerOfficeInfoVO">
         SELECT 
             boi_seq, boi_name, boi_address, boi_phone, boi_master_name, 
             boi_reg_number, boi_reg_dt, boi_image_file

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.astar.domain.realty.data.RealtyPostViewVO">
-    <resultMap id="LoginResultMap" type="com.astar.domain.user.data.UserLogin$Result">
+<mapper namespace="com.astar.realty.domain.user.mapper.UserMapper">
+    <resultMap id="LoginResultMap" type="com.astar.realty.domain.user.data.UserLogin$Result">
         <id property="id" column="ui_id"/>
         <result property="name" column="ui_name"/>
         <result property="profileImg" column="ui_image_file"/>

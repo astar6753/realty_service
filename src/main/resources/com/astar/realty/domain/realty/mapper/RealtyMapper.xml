@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.astar.domain.realty.mapper.RealtyMapper">
+<mapper namespace="com.astar.realty.domain.realty.mapper.RealtyMapper">
     <insert id="insertBuildingInfo">
         INSERT INTO building_info
         (
@@ -29,7 +29,7 @@
         FROM building_info
         WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
     </select>
-    <select id="selectBuildingList" resultType="com.astar.domain.broker.data.BuildingInfoVO">
+    <select id="selectBuildingList" resultType="com.astar.realty.domain.broker.data.BuildingInfoVO">
         SELECT *
         FROM building_info
         WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
@@ -65,7 +65,7 @@
 
 
     <insert id="insertRealtyOptionInfo" useGeneratedKeys="true"
-        parameterType="com.astar.domain.realty.data.RealtyOptionInfoVO"
+        parameterType="com.astar.realty.domain.realty.data.RealtyOptionInfoVO"
         keyProperty="ro_seq"
     >
         INSERT INTO realty_option
@@ -82,7 +82,7 @@
         )
     </insert>
     <insert id="insertRealtyBasicInfo" useGeneratedKeys="true"
-        parameterType="com.astar.domain.realty.data.RealtyBasicInfoVO"
+        parameterType="com.astar.realty.domain.realty.data.RealtyBasicInfoVO"
         keyProperty="rbi_seq"
     >
         INSERT INTO realty_basic_info
@@ -184,7 +184,7 @@
         SELECT COUNT(*)
         FROM maintain_info
     </select>
-    <select id="selectMaintainItemList" resultType="com.astar.domain.realty.data.RealtyMaintainInfoVO">
+    <select id="selectMaintainItemList" resultType="com.astar.realty.domain.realty.data.RealtyMaintainInfoVO">
         SELECT maintain_seq, maintain_name
         FROM maintain_info
     </select>
@@ -194,7 +194,7 @@
         WHERE maintain_name = #{name}
     </delete>
     
-    <select id="selectPostList" resultType="com.astar.domain.realty.data.RealtyPostViewVO">
+    <select id="selectPostList" resultType="com.astar.realty.domain.realty.data.RealtyPostViewVO">
         SELECT *, 
             (
                 6371 * acos(
@@ -310,7 +310,7 @@
         FROM realty_detail_view rdv
     </select>
 
-    <select id="selectPostInfoBySeq" resultType="com.astar.domain.realty.data.RealtyPostViewVO">
+    <select id="selectPostInfoBySeq" resultType="com.astar.realty.domain.realty.data.RealtyPostViewVO">
         SELECT *
         FROM realty_detail_view rdv
         WHERE rdv.rpi_seq = #{seq}
