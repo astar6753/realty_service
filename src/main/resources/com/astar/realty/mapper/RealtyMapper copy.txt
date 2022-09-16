@@ -35,4 +35,111 @@
         WHERE bi_name LIKE CONCAT("%",#{keyword},"%")
         LIMIT 10 offset #{offset}
     </select>
+
+
+
+
+<select id="selectPostList" resultType="com.astar.realty.data.response.RealtyPostViewVO">
+        SELECT * 
+        FROM realty_detail_view rdv
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <choose>
+                <when test="request.min_price != null AND request.max_price != null">
+                    rdv.rbi_price BETWEEN #{request.min_price} AND #{request.max_price}
+                </when>
+                <when test="request.min_price != null">
+                    rdv.rbi_price <![CDATA[>=]]> #{request.min_price}   
+                </when>
+                <when test="request.max_price != null">
+                    rdv.rbi_price <![CDATA[<=]]> #{request.max_price}
+                </when>
+            </choose>
+            <choose>
+                <when test="request.min_monthly_price != null AND request.max_monthly_price != null">
+                    rdv.rbi_monthly_price BETWEEN #{request.min_monthly_price} AND #{request.max_monthly_price}
+                </when>
+                <when test="request.min_monthly_price != null">
+                    rdv.rbi_monthly_price <![CDATA[>=]]> #{request.min_monthly_price}   
+                </when>
+                <when test="request.max_monthly_price != null">
+                    rdv.rbi_monthly_price <![CDATA[<=]]> #{request.max_monthly_price}
+                </when>
+            </choose>
+            <choose>
+                <when test="request.min_maintain_price != null AND request.max_maintain_price != null">
+                    rdv.rbi_maintain_price BETWEEN #{request.min_maintain_price} AND #{request.max_maintain_price}
+                </when>
+                <when test="request.min_maintain_price != null">
+                    rdv.rbi_maintain_price <![CDATA[>=]]> #{request.min_maintain_price}   
+                </when>
+                <when test="request.max_maintain_price != null">
+                    rdv.rbi_maintain_price <![CDATA[<=]]> #{request.max_maintain_price}
+                </when>
+            </choose>
+            <if test="request.sale_type != null">rdv.rbi_sale_type = #{request.sale_type}</if>
+            <if test="request.parking_count != null">rdv.rbi_parking_count <![CDATA[>]]> #{request.parking_count}</if>
+            <if test="request.short_term_lease != null">rdv.rbi_short_term_lease = #{request.short_term_lease}</if>
+            <if test="request.room_type != null">rdv.rbi_room_type = #{request.room_type}</if>
+            <if test="request.floor != null">rdv.rbi_floor IN 
+                <foreach collection="request.floor" item="item" index="index"  open="(" close=")" separator=",">
+                    #{item[index]}
+                </foreach>
+            </if> 
+            <choose>
+                <when test="request.min_supply_area != null AND request.max_supply_area != null">
+                    rdv.rbi_supply_area BETWEEN #{request.min_supply_area} AND #{request.max_supply_area}
+                </when>
+                <when test="request.min_supply_area != null">
+                    rdv.rbi_supply_area <![CDATA[>=]]> #{request.min_supply_area}   
+                </when>
+                <when test="request.max_supply_area != null">
+                    rdv.rbi_supply_area <![CDATA[<=]]> #{request.max_supply_area}
+                </when>
+            </choose>
+            <if test="request.rbi_room_count != null">rdv.rbi_room_count <![CDATA[>=]]> #{request.room_count}</if>
+            <if test="request.room_direction != null">rdv.rbi_room_direction IN 
+                <foreach collection="request.room_direction" item="item" index="index"  open="(" close=")" separator=",">
+                    #{item[index]}
+                </foreach>
+            </if>         
+            <if test="request.kitchen_type != null">rdv.rbi_kitchen_type = #{kitchen_type}</if>
+            <if test="request.balcony_type != null">rdv.rbi_balcony_type = #{balcony_type}</if>
+            <choose>
+                <when test="request.min_available_dt != null AND request.max_available_dt != null">
+                    rdv.rbi_available_dt BETWEEN #{request.min_available_dt} AND #{request.max_available_dt}
+                </when>
+                <when test="request.min_available_dt != null">
+                    rdv.rbi_available_dt <![CDATA[>=]]> #{request.min_available_dt}   
+                </when>
+                <when test="request.max_available_dt != null">
+                    rdv.rbi_available_dt <![CDATA[<=]]> #{request.max_available_dt}
+                </when>
+            </choose>
+            <if test="request.kitchen_structure !=null">rdv.rbi_kitchen_structure = #{request.kitchen_structure}</if>
+            <if test="request.induction !=null">ro_induction = #{request.induction}</if>
+            <if test="request.elec_range !=null">ro_elec_range = #{request.elec_range}</if>
+            <if test="request.ariconditioner !=null">ro_ariconditioner = #{request.ariconditioner}</if>
+            <if test="request.washing_machine !=null">ro_washing_machine = #{request.washing_machine}</if>
+            <if test="request.television !=null">ro_television = #{request.television}</if>
+            <if test="request.closet !=null">ro_closet = #{request.closet}</if>
+            <if test="request.bed !=null">ro_bed = #{request.bed}</if>
+            <if test="request.desk !=null">ro_desk = #{request.desk}</if>
+            <if test="request.shoe_closet !=null">ro_shoe_closet = #{request.shoe_closet}</if>
+            <if test="request.bidet !=null">ro_bidet = #{request.bidet}</if>
+            <if test="request.stove !=null">ro_stove = #{request.stove}</if>
+            <if test="request.refrigerator !=null">ro_refrigerator = #{request.refrigerator}</if>
+            <if test="request.elec_doorlock !=null">ro_elec_doorlock = #{request.elec_doorlock}</if>
+            <if test="request.elevator !=null">bi_elevator =  #{request.elevator}</if>
+            <if test="request.address !=null">bi_address like CONCAT("%",#{request.address},"%")</if>
+        </trim>
+            LIMIT 10 offset #{offset}
+    </select>
+
+
+
+
+
+
+
+
 </mapper>

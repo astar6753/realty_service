@@ -10,6 +10,8 @@ import com.astar.realty.data.RealtyBasicInfoVO;
 import com.astar.realty.data.RealtyMaintainInfoVO;
 import com.astar.realty.data.RealtyOptionInfoVO;
 import com.astar.realty.data.RealtyPostInfoVO;
+import com.astar.realty.data.request.RealtySearchRequestVO;
+import com.astar.realty.data.response.RealtyPostViewVO;
 
 @Mapper
 public interface RealtyMapper {
@@ -39,4 +41,12 @@ public interface RealtyMapper {
     public List<RealtyMaintainInfoVO> selectMaintainItemList();
 
     public void deleteMaintainItem();
+
+    //확인 필요
+    public RealtyPostViewVO selectPostList(RealtySearchRequestVO request, Integer offset);
+    public Integer selectPostCnt(RealtySearchRequestVO request);
+    public Integer selectPostPageCnt(RealtySearchRequestVO request);
+
+    public RealtyPostViewVO selectPostInfoBySeq(Integer seq);
+
 }

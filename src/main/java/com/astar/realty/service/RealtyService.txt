@@ -14,6 +14,7 @@ import com.astar.realty.data.RealtyMaintainInfoVO;
 import com.astar.realty.data.RealtyOptionInfoVO;
 import com.astar.realty.data.RealtyPostInfoVO;
 import com.astar.realty.data.RealtyTotalInfoVO;
+import com.astar.realty.data.request.RealtySearchRequestVO;
 import com.astar.realty.exception.CustomExceptions;
 import com.astar.realty.exception.ErrorCode;
 import com.astar.realty.mapper.RealtyMapper;
@@ -126,7 +127,31 @@ public class RealtyService {
         }
         mapper.deleteMaintainItem();
     }
+    
+    public Map<String,Object> selectPostList(RealtySearchRequestVO request,Integer page) {
+        Map<String,Object> resultMap = new LinkedHashMap<String,Object>();
+        if(page==null) {page=1;}
+        Integer offset = (page-1)*10;
+        if(request.getCenter_point_latitude()==null||request.getCenter_point_longitude()==null){
+            resultMap.put("msg","위도 경도는 필수 입력값입니다.");
+            return resultMap;
+        }
+        if(request.getCenter_point_radius()==null){
+            request.setCenter_point_radius(3.0);
+            //사용자 지도로부터 거리 상한선 필요
+        }
+        resultMap.put("currentPage",page);
+        resultMap.put("searchRequest",request);
+        resultMap.put("searchResult",mapper.selectPostList(request,offset));
+        resultMap.put("totalCnt",mapper.selectPostCnt(request));
+        resultMap.put("pageCnt",mapper.selectPostPageCnt(request));
+        return resultMap;
+    }
 
-
+    public Map<String,Object> selectPostInfoBySeq(Integer seq) {
+        Map<String,Object> resultMap = new LinkedHashMap<String,Object>();
+        mapper.selectPostInfoBySeq(seq);
+        return resultMap;
+    }
 }
 

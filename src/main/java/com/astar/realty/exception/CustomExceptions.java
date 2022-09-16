@@ -7,14 +7,15 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CustomExceptions extends RuntimeException {   
-        
+
     private ErrorCode errorCode;
-    private String desc;
+    private String desc;    
+    // private String detail;       
 
     public CustomExceptions(ErrorCode errorCode, String desc) {
         // super(message);
         this.errorCode = errorCode;
         this.desc = desc;
     }
-    
+
 }

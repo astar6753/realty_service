@@ -1,33 +1,49 @@
 package com.astar.realty.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import com.astar.realty.data.BrokerInfoVO;
-import com.astar.realty.data.BrokerLoginVO;
-import com.astar.realty.data.BrokerOfficeInfoVO;
-import com.astar.realty.data.LoginSessionVO;
-import com.astar.realty.data.request.BrokerDTO;
+import com.astar.realty.data.broker.BrokerLogin;
+import com.astar.realty.data.broker.BrokerModify;
+import com.astar.realty.data.brokerOffice.BrokerOfficeCreate;
+import com.astar.realty.data.brokerOffice.BrokerOfficeInfoVO;
+import com.astar.realty.data.brokerOffice.BrokerOfficeModify;
+import com.astar.realty.data.broker.BrokerCreate;
 
 @Mapper
 public interface BrokerMapper {
-    public int insertBrokerInfo(BrokerDTO.Request request);
-    public Boolean isExistBrokerId(String id);
-    public Boolean loginBroker(BrokerLoginVO login);
-    public LoginSessionVO getLoginBrokerInfo(BrokerLoginVO login);
-    public void updateBrokerInfo(BrokerInfoVO data);
+    //BrokerCreate
+    public int insertBrokerCreateInfo(BrokerCreate.Request request);
+    public Boolean isExistBrokerAccountId(String id);
 
-    public Integer selectBrokerStatus(Integer user_no);
-    public void updateBrokerStatus(Integer user_no, Integer status);
-    
-    public void insertBrokerOfficeInfo(BrokerOfficeInfoVO data);
-    public Boolean isExistBrokerOffice(String name, Integer reg_no);
+    //BrokerLogin
+    public Boolean isValidBrokerLoginInfo(BrokerLogin.Request request);
+    public BrokerLogin.Result selectBrokerLoginInfo(BrokerLogin.Request request);
 
-    public Integer selectBrokerOfficeTotalPages(String keyword);
+    //BrokerModifyInfoById
+    public int updateBrokerInfoById(BrokerModify.Request request);
+    public Boolean isExistBrokerOfficeBySeq(Integer seq);
+
+    //BrokerModifyStatus
+    public Integer selectBrokerStatus(Integer broker_no);
+    public void updateBrokerStatus(Integer broker_no, Integer status);
+
+    //BrokerOfficeCreate
+    public int insertBrokerOfficeCreateInfo(BrokerOfficeCreate.Request request);
+    public Boolean isExistBrokerOffice(String name, String reg_no);
+
+    //BrokerOfiiceSearchList
     public Integer selectBrokerOfficeTotalCount(String keyword);
-    public BrokerOfficeInfoVO selectBrokerOfficeList(String keyword, Integer offset);
+    public Integer selectBrokerOfficePageCount(String keyword, Integer limit);
+    public List<BrokerOfficeInfoVO> selectBrokerOfficeList(String keyword, Integer limit, Integer offset);
 
-    public int updateBrokerOfficeInfo(BrokerOfficeInfoVO data);
-    public int deleteBrokerOfficeInfo(Integer no);
-    public BrokerOfficeInfoVO selectBrokerOfficeBySeq(Integer no);
+    //BrokerOfiiceModify
+    public int updateBrokerOfficeInfo(BrokerOfficeModify.Request request);
+    
+    //BrokerOfiiceRemove
+    public int deleteBrokerOfficeBySeq(Integer office_no);
+
+    public BrokerOfficeInfoVO selectBrokerOfficeBySeq(Integer office_no);
 
 }

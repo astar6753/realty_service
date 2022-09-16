@@ -1,0 +1,41 @@
+
+get show
+post create
+patch modify
+delete destroys
+
+//swagger
+ApiOperation
+ApiResponses
+
+
+controller/service search/show/find/create/modify/remove
+mapper select/insert/update/delete
+
+search 페이징+검색
+show 리스트조회
+find 단수조회
+
+
+특정동작 
+make login/logout
+check > isExist
+toggle 부득이하게 하나의 컨트롤러에서 두가지동작 수행
+
+
+ud => 공용 response객체로 반환
+c => 
+
+
+// parameter validation
+
+
+checkBrokerOfficeDuplication > name/reg_no @service > exception
+searchBrokerOfficeInfoList > object @valid > exception
+modifyBrokerOfficeInfo > object @valid > exception
+removeBrokerOfficeBySeq > office_no @service > exception
+findBrokerOfficeInfoBySeq > office_no @service > exception
+
+
+
+

@@ -193,5 +193,128 @@
         DELETE FROM maintain_info 
         WHERE maintain_name = #{name}
     </delete>
+    
+    <select id="selectPostList" resultType="com.astar.realty.data.response.RealtyPostViewVO">
+        SELECT *, 
+            (
+                6371 * acos(
+                            cos(radians(bi_latitude))
+                            * cos(radians(request.center_point_latitude))
+                            * cos(radians(bi_longitude) - radians(request.center_point_longitude))
+                            + sin(radians(bi_latitude))
+                            * sin(radians(request.center_point_latitude))
+                        )
+            )as distance
+        FROM realty_detail_view rdv
+        <trim prefix="HAVING" prefixOverrides="AND">
+            <if test="request.center_point_radius != null">
+                AND distance <![CDATA[<=]]> #{request.center_point_radius}
+            </if>
+            <choose>
+                <when test="request.min_price != null and request.max_price != null">
+                    AND rdv.rbi_price BETWEEN #{request.min_price} AND #{request.max_price}
+                </when>
+                <when test="request.min_price != null">
+                    AND rdv.rbi_price <![CDATA[>=]]> #{request.min_price}   
+                </when>
+                <when test="request.max_price != null">
+                    AND rdv.rbi_price <![CDATA[<=]]> #{request.max_price}
+                </when>
+            </choose>
+            <choose>
+                <when test="request.min_monthly_price != null and request.max_monthly_price != null">
+                    AND rdv.rbi_monthly_price BETWEEN #{request.min_monthly_price} AND #{request.max_monthly_price}
+                </when>
+                <when test="request.min_monthly_price != null">
+                    AND rdv.rbi_monthly_price <![CDATA[>=]]> #{request.min_monthly_price}   
+                </when>
+                <when test="request.max_monthly_price != null">
+                    AND rdv.rbi_monthly_price <![CDATA[<=]]> #{request.max_monthly_price}
+                </when>
+            </choose>
+            <choose>
+                <when test="request.min_maintain_price != null and request.max_maintain_price != null">
+                    AND rdv.rbi_maintain_price BETWEEN #{request.min_maintain_price} AND #{request.max_maintain_price}
+                </when>
+                <when test="request.min_maintain_price != null">
+                    AND rdv.rbi_maintain_price <![CDATA[>=]]> #{request.min_maintain_price}   
+                </when>
+                <when test="request.max_maintain_price != null">
+                    AND rdv.rbi_maintain_price <![CDATA[<=]]> #{request.max_maintain_price}
+                </when>
+            </choose>
+            <if test="request.sale_type != null">AND rdv.rbi_sale_type = #{request.sale_type}</if>
+            <if test="request.parking_count != null">AND rdv.rbi_parking_count <![CDATA[>]]> #{request.parking_count}</if>
+            <if test="request.short_term_lease != null">AND rdv.rbi_short_term_lease = #{request.short_term_lease}</if>
+            <if test="request.room_type != null">AND rdv.rbi_room_type = #{request.room_type}</if>
+            <if test="request.floor != null">AND rdv.rbi_floor IN 
+                <foreach collection="request.floor" item="item" index="index"  open="(" close=")" separator=",">
+                    #{item[index]}
+                </foreach>
+            </if> 
+            <choose>
+                <when test="request.min_supply_area != null and request.max_supply_area != null">
+                    AND rdv.rbi_supply_area BETWEEN #{request.min_supply_area} AND #{request.max_supply_area}
+                </when>
+                <when test="request.min_supply_area != null">
+                    AND rdv.rbi_supply_area <![CDATA[>=]]> #{request.min_supply_area}   
+                </when>
+                <when test="request.max_supply_area != null">
+                    AND rdv.rbi_supply_area <![CDATA[<=]]> #{request.max_supply_area}
+                </when>
+            </choose>
+            <if test="request.room_count != null">AND rdv.rbi_room_count <![CDATA[>=]]> #{request.room_count}</if>
+            <if test="request.room_direction != null">AND rdv.rbi_room_direction IN 
+                <foreach collection="request.room_direction" item="item" index="index"  open="(" close=")" separator=",">
+                    #{item[index]}
+                </foreach>
+            </if>         
+            <if test="request.kitchen_type != null">AND rdv.rbi_kitchen_type = #{kitchen_type}</if>
+            <if test="request.balcony_type != null">AND rdv.rbi_balcony_type = #{balcony_type}</if>
+            <choose>
+                <when test="request.min_available_dt != null and request.max_available_dt != null">
+                    AND rdv.rbi_available_dt BETWEEN #{request.min_available_dt} AND #{request.max_available_dt}
+                </when>
+                <when test="request.min_available_dt != null">
+                    AND rdv.rbi_available_dt <![CDATA[>=]]> #{request.min_available_dt}   
+                </when>
+                <when test="request.max_available_dt != null">
+                    AND rdv.rbi_available_dt <![CDATA[<=]]> #{request.max_available_dt}
+                </when>
+            </choose>
+            <if test="request.kitchen_structure !=null">AND rdv.rbi_kitchen_structure = #{request.kitchen_structure}</if>
+            <if test="request.induction !=null">AND ro_induction = #{request.induction}</if>
+            <if test="request.elec_range !=null">AND ro_elec_range = #{request.elec_range}</if>
+            <if test="request.ariconditioner !=null">AND ro_ariconditioner = #{request.ariconditioner}</if>
+            <if test="request.washing_machine !=null">AND ro_washing_machine = #{request.washing_machine}</if>
+            <if test="request.television !=null">AND ro_television = #{request.television}</if>
+            <if test="request.closet !=null">AND ro_closet = #{request.closet}</if>
+            <if test="request.bed !=null">AND ro_bed = #{request.bed}</if>
+            <if test="request.desk !=null">AND ro_desk = #{request.desk}</if>
+            <if test="request.shoe_closet !=null">AND ro_shoe_closet = #{request.shoe_closet}</if>
+            <if test="request.bidet !=null">AND ro_bidet = #{request.bidet}</if>
+            <if test="request.stove !=null">AND ro_stove = #{request.stove}</if>
+            <if test="request.refrigerator !=null">AND ro_refrigerator = #{request.refrigerator}</if>
+            <if test="request.elec_doorlock !=null">AND ro_elec_doorlock = #{request.elec_doorlock}</if>
+            <if test="request.elevator !=null">AND bi_elevator =  #{request.elevator}</if>
+            <if test="request.address !=null">AND bi_address like CONCAT("%",#{request.address},"%")</if>
+        </trim>
+            LIMIT 10 offset #{offset}
+    </select>
+    <select id="selectPostCnt" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM realty_detail_view rdv
+    </select>
+    <select id="selectPostPageCnt" resultType="java.lang.Integer">
+        SELECT CEIL(COUNT(*)/10)
+        FROM realty_detail_view rdv
+    </select>
+
+    <select id="selectPostInfoBySeq" resultType="com.astar.realty.data.response.RealtyPostViewVO">
+        SELECT *
+        FROM realty_detail_view rdv
+        WHERE rdv.rpi_seq = #{seq}
+    </select>
+
 
 </mapper>

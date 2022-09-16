@@ -1,8 +1,6 @@
-package com.astar.realty.data;
+package com.astar.realty.data.broker;
 
 import lombok.Data;
-
-
 
 @Data
 public class BrokerInfoVO {
@@ -13,5 +11,5 @@ public class BrokerInfoVO {
     private String bork_name;
     private String bork_phone;
     private Integer bork_status;
-    private String bork_image_file;
+    private String bork_image_file;    
 }
