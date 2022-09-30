@@ -21,10 +21,10 @@ public class BrokerModify {
         
         @ApiModelProperty(value="회원 아이디", example = "Broker01")
         @NotBlank(message = "아이디를 입력해 주세요.")
-        @Size(min=6, max=20, message = "아이디는 6자 이상 20자 이하만 입력 가능합니다.")
+        @Size(min=6, max=20, message = "유효하지 않는 공인중개사 회원 Id입니다")
         private String bork_id;
 
-        @ApiModelProperty(value="회원 비밀번호", example = "qwer1234")
+        @ApiModelProperty(value="변경할 비밀번호", example = "qwer1234")
         @NotBlank(message = "비밀번호를 입력해 주세요.")
         @Size(min=8, max=20, message = "비밀번호는 8자 이상 20자 이하만 입력 가능합니다.")
         private String bork_pwd;
@@ -46,7 +46,7 @@ public class BrokerModify {
     }
 
     @Getter @Builder
-    @ApiModel(value="BrokerModify.Response : 공인중개사 회원정보 수정 요청", description="공인중개사 회원정보 수정 응답")
+    @ApiModel(value="BrokerModify.Response : 공인중개사 회원정보 수정 응답", description="공인중개사 회원정보 수정 응답")
     public static class Response {
 
         @ApiModelProperty(value="HttpStatus", example = "OK")

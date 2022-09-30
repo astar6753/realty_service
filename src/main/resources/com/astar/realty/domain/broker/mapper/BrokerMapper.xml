@@ -79,13 +79,13 @@
             OR boi_reg_number = #{reg_no}
     </select>
 
-    <select id="selectBrokerOfficeTotalCount" resultType="java.lang.Integer">
-        SELECT COUNT(*)
+    <select id="selectBrokerOfficePageCount" resultType="java.lang.Integer">
+        SELECT CEIL(COUNT(*)/#{limit})
         FROM broker_office_info
         WHERE boi_name LIKE CONCAT("%",#{keyword},"%")
     </select>
-    <select id="selectBrokerOfficePageCount" resultType="java.lang.Integer">
-        SELECT CEIL(COUNT(*)/#{limit})
+    <select id="selectBrokerOfficeTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
         FROM broker_office_info
         WHERE boi_name LIKE CONCAT("%",#{keyword},"%")
     </select>

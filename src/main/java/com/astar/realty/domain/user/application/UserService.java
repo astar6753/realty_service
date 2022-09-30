@@ -71,10 +71,10 @@ public class UserService {
 
     public Boolean modifyUserInfoBySeq(UserModify.Request request){
         if(!mapper.isExistUserAccountId(request.getUi_id())){
-            throw new CustomExceptions(ErrorCode.NOT_EXISTED_USER_ID,"존재하지 않는 ID입니다.");
+            throw new CustomExceptions(ErrorCode.NOT_EXIST_USER_ID,"존재하지 않는 ID입니다.");
         }
         else if(!mapper.isExistUserInfoBySeq(request.getUi_seq())){
-            throw new CustomExceptions(ErrorCode.NOT_EXISTED_USER_NO,"존재하지 않는 서비스 회원 번호입니다.");
+            throw new CustomExceptions(ErrorCode.NOT_EXIST_USER_NO,"존재하지 않는 서비스 회원 번호입니다.");
         }
         else{
             try {

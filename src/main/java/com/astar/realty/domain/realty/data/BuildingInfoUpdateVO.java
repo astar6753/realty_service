@@ -1,4 +1,4 @@
-package com.astar.realty.domain.broker.data;
+package com.astar.realty.domain.realty.data;
 
 import lombok.Data;
 

@@ -33,7 +33,7 @@ public class BrokerOfficeSearch {
         @ApiModelProperty(value="HttpStatus", example = "OK")
         private HttpStatus status;
         
-        @ApiModelProperty(value="응답 메세지", example = "공인중개사 회원 정보가 추가되었습니다.")
+        @ApiModelProperty(value="응답 메세지", example = "공인중개사 사무소 정보가 조회되었습니다.")
         private String message;
         
         private Result result;

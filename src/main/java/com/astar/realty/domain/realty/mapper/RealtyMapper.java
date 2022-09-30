@@ -4,49 +4,64 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.astar.realty.domain.broker.data.BuildingInfoUpdateVO;
-import com.astar.realty.domain.broker.data.BuildingInfoVO;
+import com.astar.realty.domain.realty.data.BuildingInfoVO;
+import com.astar.realty.domain.realty.data.BuildingModify;
 import com.astar.realty.domain.realty.data.RealtyBasicInfoVO;
 import com.astar.realty.domain.realty.data.RealtyMaintainInfoVO;
 import com.astar.realty.domain.realty.data.RealtyOptionInfoVO;
 import com.astar.realty.domain.realty.data.RealtyPostInfoVO;
+import com.astar.realty.domain.realty.data.RealtyPostSearchVO;
 import com.astar.realty.domain.realty.data.RealtyPostViewVO;
-import com.astar.realty.domain.realty.data.RealtySearchRequestVO;
 
 @Mapper
 public interface RealtyMapper {
-    public void insertBuildingInfo(BuildingInfoVO data);
-    public Boolean isExistBuildingAddress(String address);
+
+    //BuildingCreate
+    public int insertBuildingInfo(BuildingInfoVO info);
+    public Boolean isExistBuildingAddress(String noneSpacingAddress);
     
-    public Integer selectBuildingTotalPages(String keyword);
+    //BuildingSearch
+    public Integer selectBuildingPageCount(String keyword, Integer limit);
     public Integer selectBuildingTotalCount(String keyword);
-    public List<BuildingInfoVO> selectBuildingList(String keyword, Integer offset);
+    public List<BuildingInfoVO> selectBuildingList(String keyword,  Integer limit, Integer offset);
 
-    public void updateBuildingInfo(BuildingInfoUpdateVO data);
-    public Boolean isExistBuildingInfoBySeq(Integer building_seq);
-    public void deleteBuildingInfo(Integer building_seq);
+    //BuildingModify
+    public int updateBuildingInfo(BuildingModify.Request request);
+    public Boolean isExistBuildingInfoBySeq(Integer building_no);
 
-    public void insertRealtyOptionInfo(RealtyOptionInfoVO data);
-    public void insertRealtyBasicInfo(RealtyBasicInfoVO data);
-    public void insertRealtyPostInfo(RealtyPostInfoVO data);
+    //BuildingRemove
+    public int deleteBuildingInfo(Integer building_no);
 
-    public void updateRealtyBasicInfo(RealtyBasicInfoVO data);
-    public void updateRealtyOptionInfo(RealtyOptionInfoVO data);
-    public void updateRealtyPostInfo(RealtyPostInfoVO data);
+    //RealtyPostCreate
+    public int insertRealtyOptionInfo(RealtyOptionInfoVO data);
+    public int insertRealtyBasicInfo(RealtyBasicInfoVO data);
+    public int insertRealtyPostInfo(RealtyPostInfoVO data);
 
-    public Boolean isExistMaintainItem(String name);
-    public void insertMaintainItem(String name);
+    //RealtyPostModify
+    public int updateRealtyBasicInfo(RealtyBasicInfoVO data);
+    public int updateRealtyOptionInfo(RealtyOptionInfoVO data);
+    public Boolean isExistRealtyOptionInfoBySeq(Integer option_no);
+    public int updateRealtyPostInfo(RealtyPostInfoVO data);
+    public Boolean isExistRealtyPostInfoBySeq(Integer post_no);    
 
+    //MaintainInfoCreate
+    public Boolean isExistMaintainName(String name);
+    public int insertMaintainItem(String name);
+
+    //MaintainInfoShow
     public Integer selectMaintainItemCount();
     public List<RealtyMaintainInfoVO> selectMaintainItemList();
 
-    public void deleteMaintainItem();
+    //MaintainInfoRemove
+    public Boolean isExistMaintainItemBySeq(Integer maintain_no);
+    public int deleteMaintainItemBySeq(Integer maintain_no);
 
-    //확인 필요
-    public RealtyPostViewVO selectPostList(RealtySearchRequestVO request, Integer offset);
-    public Integer selectPostCnt(RealtySearchRequestVO request);
-    public Integer selectPostPageCnt(RealtySearchRequestVO request);
+    //RealtyPostSearch
+    public List<RealtyPostViewVO> selectRealtyPostList(RealtyPostSearchVO searchKeywords, Integer limit, Integer offset);
+    public Integer selectRealtyPostPageCount(RealtyPostSearchVO searchKeywords, Integer limit);
+    public Integer selectRealtyPostTotalCount(RealtyPostSearchVO searchKeywords);
 
-    public RealtyPostViewVO selectPostInfoBySeq(Integer seq);
+    //RealtyPostFind
+    public RealtyPostViewVO selectRealtyPostInfoBySeq(Integer post_no);
 
 }

@@ -45,7 +45,7 @@ public class BrokerCreate {
     }
 
     @Getter @Builder
-    @ApiModel(value="BrokerCreate.Response : 공인중개사 회원 추가 응답", description="공인중개사 회원 추가 응답")
+    @ApiModel(value="BrokerCreate.Response : 공인중개사 회원 등록 응답", description="공인중개사 회원 등록 응답")
     public static class Response {
 
         @ApiModelProperty(value="HttpStatus", example = "CREATED")

@@ -36,7 +36,16 @@
         LIMIT 10 offset #{offset}
     </select>
 
-
+, 
+            (
+                6371 * acos(
+                            cos(radians(bi_latitude))
+                            * cos(radians(request.center_point_latitude))
+                            * cos(radians(bi_longitude) - radians(request.center_point_longitude))
+                            + sin(radians(bi_latitude))
+                            * sin(radians(request.center_point_latitude))
+                        )
+            )as distance
 
 
 <select id="selectPostList" resultType="com.astar.realty.data.response.RealtyPostViewVO">

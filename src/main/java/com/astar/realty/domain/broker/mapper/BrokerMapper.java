@@ -34,8 +34,8 @@ public interface BrokerMapper {
     public Boolean isExistBrokerOffice(String name, String reg_no);
 
     //BrokerOfiiceSearchList
-    public Integer selectBrokerOfficeTotalCount(String keyword);
     public Integer selectBrokerOfficePageCount(String keyword, Integer limit);
+    public Integer selectBrokerOfficeTotalCount(String keyword);
     public List<BrokerOfficeInfoVO> selectBrokerOfficeList(String keyword, Integer limit, Integer offset);
 
     //BrokerOfiiceModify

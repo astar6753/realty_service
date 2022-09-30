@@ -39,6 +39,7 @@ public class BrokerLogin {
         private String message;
         
         private Result result;
+
     }
 
     @Getter
